@@ -21,13 +21,13 @@ public class ArrayDeque<T> { //T is generics
     }
 
     private int onePlus(int x) {
-        return (x + 1)%items.length;
+        return (x + 1) % items.length;
     }
     private int oneMinus(int x) {
-        return (x - 1 + items.length)%items.length;
+        return (x - 1 + items.length) % items.length;
     }
     
-    public void resize() {
+    private void resize() {
         if(size==items.length) {
             resize(items.length * 2);
         }
@@ -36,34 +36,36 @@ public class ArrayDeque<T> { //T is generics
         }
     }
 
-    public void resize(int NEW_CAPCITY) {
+    private void resize(int NEW_CAPACITY) {
         T[] temp = items;
-        items = (T[]) new Object[NEW_CAPCITY];
+        items = (T[]) new Object[NEW_CAPACITY];
 
         int curFirst = onePlus(nextFirst);
-        int curLast = oneMinus(nextLast);
+        int end = nextLast;
 
-        for(int i=curFirst;i!=curLast;i=(i+1)%temp.length){
+        nextFirst = NEW_CAPACITY-1;
+        nextLast = 0;
+
+        for(int i=curFirst;i!=end;i=(i+1)%temp.length){
             items[nextLast] = temp[i];
             nextLast = onePlus(nextLast);
         }
-        items[nextLast] = temp[curLast];
-        nextLast = onePlus(nextLast);
     }
 
     public void addFirst(T item) {
-        resize();
         items[nextFirst] = item;
         nextFirst = oneMinus(nextFirst);
         size+=1;
+        resize();
     }
 
     public void addLast(T item) {
-        resize();
         items[nextLast] = item;
         nextLast = onePlus(nextLast);
         size+=1;
+        resize();
     }
+
     public boolean isEmpty() {
         if(size!=0)return false;
         return true;
@@ -82,20 +84,20 @@ public class ArrayDeque<T> { //T is generics
 
     public T removeFirst() {
         if(isEmpty())return null;
-        resize();
         nextFirst = onePlus(nextFirst);
         T ret = items[nextFirst];
         items[nextFirst] = null;
         size-=1;
+        resize();
         return ret;
     }
 
     public T removeLast() {
         if(isEmpty())return null;
-        resize();
         nextLast = oneMinus(nextLast);
         T ret = items[nextLast];
         size-=1;
+        resize();
         return ret;
     }
 

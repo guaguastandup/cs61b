@@ -12,7 +12,7 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
     
     private Node sentinel;//empty in fact,not included in size
     private int size;
-
+    
     public LinkedListDeque() {
         //sentinel = new Node(null,null,null);
         sentinel = new Node((T)"null",null,null);
@@ -33,7 +33,7 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         }
         else return getRecursiveNext(index-1,sentinel.nxt).item;
     }
-    public Node getRecursiveNext(int index,Node p) {//This is a helper
+    private Node getRecursiveNext(int index,Node p) {//This is a helper
         if(index==0) {
             return p;
         }

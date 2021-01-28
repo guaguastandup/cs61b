@@ -3,10 +3,10 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         public T item;
         public Node pre;
         public Node nxt;
-        public Node(T item0,Node pre0,Node nxt0) {
-            item = item0;
-            pre = pre0;
-            nxt = nxt0;
+        public Node(T item,Node pre,Node nxt) {
+            this.item = item;
+            this.pre = pre;
+            this.nxt = nxt;
         }
     }
     

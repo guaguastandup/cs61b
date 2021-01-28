@@ -6,7 +6,8 @@ public class ArrayDeque<T> { //T is generics
     */
     private T[] items;
 
-    private int size;
+    private int size;//the length of the array
+    //items.length:the capacity of the array
 
     private int nextFirst;
     private int nextLast;
@@ -16,9 +17,10 @@ public class ArrayDeque<T> { //T is generics
     public ArrayDeque() {
         items = (T[]) new Object[INITIAL_CAPACITY];
         size = 0;
-        nextFirst = INITIAL_CAPACITY-1;
-        nextLast = 0;
+        nextFirst = 0;
+        nextLast = 1;
     }
+
 
     private int onePlus(int x) {
         return (x + 1) % items.length;
@@ -27,43 +29,38 @@ public class ArrayDeque<T> { //T is generics
         return (x - 1 + items.length) % items.length;
     }
     
-    private void resize() {
-        if(size==items.length) {
-            resize(items.length * 2);
-        }
-        if(items.length > 8 && size < items.length / 4) {
-            resize(items.length / 2);
-        }
-    }
 
     private void resize(int NEW_CAPACITY) {
-        T[] temp = items;
-        items = (T[]) new Object[NEW_CAPACITY];
+        T[] temp = (T[]) new Object[NEW_CAPACITY];
 
         int curFirst = onePlus(nextFirst);
-        int end = nextLast;
 
-        nextFirst = NEW_CAPACITY-1;
-        nextLast = 0;
-
-        for(int i=curFirst;i!=end;i=(i+1)%temp.length){
-            items[nextLast] = temp[i];
-            nextLast = onePlus(nextLast);
+        for(int i=0;i<size;i++) {
+            temp[i] = items[curFirst];
+            curFirst = onePlus(curFirst);
         }
+        
+        items = temp;
+        nextFirst = items.length-1;
+        nextLast = size;
     }
 
     public void addFirst(T item) {
+        if(size==items.length) {
+            resize(size*2);
+        }
         items[nextFirst] = item;
         nextFirst = oneMinus(nextFirst);
-        size+=1;
-        resize();
+        size++;
     }
 
     public void addLast(T item) {
+        if(size==items.length) {
+            resize(size*2);
+        }
         items[nextLast] = item;
         nextLast = onePlus(nextLast);
-        size+=1;
-        resize();
+        size++;
     }
 
     public boolean isEmpty() {
@@ -74,6 +71,7 @@ public class ArrayDeque<T> { //T is generics
     public int size() {
         return size;
     }   
+
     public void printDeque() {
         int curFirst = onePlus(nextFirst);
         for(int i=curFirst;i!=nextLast;i = onePlus(i)) {
@@ -88,7 +86,9 @@ public class ArrayDeque<T> { //T is generics
         T ret = items[nextFirst];
         items[nextFirst] = null;
         size-=1;
-        resize();
+        if(items.length>=16&&size<(items.length)/4) {
+            resize(items.length/2);
+        }
         return ret;
     }
 
@@ -97,7 +97,9 @@ public class ArrayDeque<T> { //T is generics
         nextLast = oneMinus(nextLast);
         T ret = items[nextLast];
         size-=1;
-        resize();
+        if(items.length>=16&&size<(items.length)/4) {
+            resize(items.length/2);
+        }
         return ret;
     }
 

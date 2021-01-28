@@ -21,12 +21,13 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         size = 0;
     }
 
-    public LinkedListDeque(T item) {
-        sentinel = new Node((T)"null",null,null);
-        sentinel.nxt = new Node(item,sentinel,sentinel);
-        sentinel.pre = sentinel.nxt;//the new node
-        size = 1;
-    }
+    // public LinkedListDeque(T item) {
+    //     sentinel = new Node((T)"null",null,null);
+    //     sentinel.nxt = new Node(item,sentinel,sentinel);
+    //     sentinel.pre = sentinel.nxt;//the new node
+    //     size = 1;
+    // }
+    
     public T getRecursive(int index) {//same as get,but uses recursion
         if(index==0) {
             return sentinel.nxt.item;

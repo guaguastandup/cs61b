@@ -15,7 +15,7 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
     
     public LinkedListDeque() {
         //sentinel = new Node(null,null,null);
-        sentinel = new Node((T)"null",null,null);
+        sentinel = new Node(null,null,null);
         sentinel.pre = sentinel;
         sentinel.nxt = sentinel;
         size = 0;

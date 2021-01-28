@@ -96,6 +96,7 @@ public class ArrayDeque<T> { //T is generics
         if(isEmpty())return null;
         nextLast = oneMinus(nextLast);
         T ret = items[nextLast];
+        items[nextLast] = null;
         size-=1;
         if(items.length>=16&&size<(items.length)/4) {
             resize(items.length/2);

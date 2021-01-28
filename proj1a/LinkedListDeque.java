@@ -73,6 +73,7 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         }
         T ret = sentinel.nxt.item;
         sentinel.nxt = sentinel.nxt.nxt;
+        sentinel.nxt.nxt.pre = sentinel;
         size-=1;
         return ret;
     }

@@ -27,12 +27,12 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
     //     sentinel.pre = sentinel.nxt;//the new node
     //     size = 1;
     // }
-    
+
     public T getRecursive(int index) {//same as get,but uses recursion
-        if(index==0) {
-            return sentinel.nxt.item;
+        if(index>size-1){
+            return null;
         }
-        else return getRecursiveNext(index-1,sentinel.nxt).item;
+        else return getRecursiveNext(index,sentinel.nxt).item;
     }
     private Node getRecursiveNext(int index,Node p) {//This is a helper
         if(index==0) {
@@ -88,17 +88,17 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
     }
     
     public T get(int index) { //must use iteration, not recursion.
-        int cnt = 0;
-        Node ptr = sentinel;
-        while(ptr.nxt!=sentinel) {
-            ptr = ptr.nxt;
-            if(cnt==index) {
-                return ptr.item;
+        Node p = sentinel.nxt;
+        if(index>size-1)return null;
+        for(int i=0;i<size;i++) {
+            if(i==index) {
+                return p.item;
             }
-            cnt++;
+            p = p.nxt;
         }
         return null;
     }
+
     public int size() { //must take constant time.
         return size;
     }

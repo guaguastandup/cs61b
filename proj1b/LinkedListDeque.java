@@ -1,4 +1,4 @@
-public class LinkedListDeque <T>{ //Do not maintain references to items that are no longer in the deque
+public class LinkedListDeque <T> implements Deque<T>{ 
     private class Node {
         public T item;
         public Node pre;
@@ -10,7 +10,7 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         }
     }
     
-    private Node sentinel;//empty in fact,not included in size
+    private Node sentinel;
     private int size;
     
     public LinkedListDeque() {
@@ -21,19 +21,13 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         size = 0;
     }
 
-    // public LinkedListDeque(T item) {
-    //     sentinel = new Node((T)"null",null,null);
-    //     sentinel.nxt = new Node(item,sentinel,sentinel);
-    //     sentinel.pre = sentinel.nxt;//the new node
-    //     size = 1;
-    // }
-
-    public T getRecursive(int index) {//same as get,but uses recursion
+    public T getRecursive(int index) {
         if(index>size-1){
             return null;
         }
         else return getRecursiveNext(index,sentinel.nxt).item;
     }
+
     private Node getRecursiveNext(int index,Node p) {//This is a helper
         if(index==0) {
             return p;
@@ -44,21 +38,29 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         }
     }
 
+    @Override
     public void addFirst(T item) {
-        sentinel.nxt = new Node(item,sentinel,sentinel.nxt);
-        sentinel.nxt.nxt.pre = sentinel.nxt;
-        size+=1;
-    }
-    public void addLast(T item) {
-        sentinel.pre = new Node(item,sentinel.pre,sentinel);
-        sentinel.pre.pre.nxt = sentinel.pre;
+        Node a = new Node(item,sentinel,sentinel.nxt);
+        sentinel.nxt.pre = a;
+        sentinel.nxt = a;
         size+=1;
     }
 
+    @Override
+    public void addLast(T item) {
+        Node a = new Node(item,sentinel.pre,sentinel);
+        sentinel.pre.nxt = a;
+        sentinel.pre = a;
+        size+=1;
+    }
+
+    @Override
     public boolean isEmpty() {
         if(size==0)return true;
         return false;
     }
+
+    @Override
     public void printDeque() {
         Node ptr = sentinel;
         while(ptr.nxt!=sentinel) {
@@ -67,6 +69,7 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         }
     }
 
+    @Override
     public T removeFirst() {
         if(size==0) {
             return null;
@@ -77,6 +80,8 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         size-=1;
         return ret;
     }
+
+    @Override
     public T removeLast() {
         if(size==0) {
             return null;
@@ -87,7 +92,8 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         size-=1;
         return ret;
     }
-    
+
+    @Override
     public T get(int index) { //must use iteration, not recursion.
         Node p = sentinel.nxt;
         if(index>size-1)return null;
@@ -99,7 +105,7 @@ public class LinkedListDeque <T>{ //Do not maintain references to items that are
         }
         return null;
     }
-
+    @Override
     public int size() { //must take constant time.
         return size;
     }

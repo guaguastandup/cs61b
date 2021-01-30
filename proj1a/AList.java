@@ -1,4 +1,4 @@
-public class Alist<Item> {
+public class AList<Item> {
     private Item[] items;
     private int size;
 

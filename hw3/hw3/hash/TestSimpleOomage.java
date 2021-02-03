@@ -42,18 +42,20 @@ public class TestSimpleOomage {
         assertNotEquals(ooA, "ketchup");
     }
 
-    /*
     @Test
     public void testHashCodeAndEqualsConsistency() {
         SimpleOomage ooA = new SimpleOomage(5, 10, 20);
         SimpleOomage ooA2 = new SimpleOomage(5, 10, 20);
+        SimpleOomage ooA3 = new SimpleOomage(10,20,5);
         HashSet<SimpleOomage> hashSet = new HashSet<>();
-        hashSet.add(ooA);
+        hashSet.add(ooA);//just add
+        System.out.println(ooA.hashCode()+" "+ooA2.hashCode()+" "+ooA3.hashCode());
         assertTrue(hashSet.contains(ooA2));
-    }*/
+        assertTrue(!hashSet.contains(ooA3));
+    }
 
     /* TODO: Uncomment this test after you finish haveNiceHashCode Spread in OomageTestUtility */
-    /*@Test
+    @Test
     public void testRandomOomagesHashCodeSpread() {
         List<Oomage> oomages = new ArrayList<>();
         int N = 10000;
@@ -63,10 +65,12 @@ public class TestSimpleOomage {
         }
 
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 10));
-    }*/
+    }
 
     /** Calls tests for SimpleOomage. */
     public static void main(String[] args) {
+        //jh61b.junit.textui.runClasses(TestSimpleOomage.class);
         jh61b.junit.textui.runClasses(TestSimpleOomage.class);
+
     }
 }
